@@ -39,7 +39,7 @@ public class FluidSimulator implements Screen, InputProcessor {
 	public static final int WORLD_HEIGHT = 120;
 	public static final int INITIAL_HEIGHT = 5;
 	public static final float TIMESTEP = 0.022f;
-	public static float GRAVITY_FORCE = 0.0f;
+	public static float GRAVITY_FORCE = 0f;
 	public static final Vector2 gravityVect = new Vector2(0.0f, GRAVITY_FORCE);
 	public static final int SIZE = 10000;
 	public static final int ANDROID_SIZE = 600;
@@ -178,6 +178,7 @@ public class FluidSimulator implements Screen, InputProcessor {
 
 	private void createWorld() {
 		if (IS_DESKTOP) {
+			//the image for the drop
 			dropTexture = new Texture("data/fluid_drop_red_64.png");
 			dropTexture2 = new Texture("data/fluid_drop_blue_64.png");
 		}
@@ -193,18 +194,6 @@ public class FluidSimulator implements Screen, InputProcessor {
 			lineVertices = new float[(ANDROID_SIZE) * 2 * 2 * 3];
 		}
 
-		// On Android populate directly
-		if (!IS_DESKTOP) {
-			for (float j = INITIAL_HEIGHT + hpadding + 2; j < WORLD_HEIGHT - 2; j += 1.0f) {
-				for (float i = -WORLD_WIDTH / 3; i < WORLD_WIDTH / 3; i += 1.0f) {
-					particles.add(new Particle(i, j));
-					tempParticle = particles.get(particles.size() - 1);
-					tempParticle.type = (emitType);
-					if (particles.size() >= ANDROID_SIZE)
-						return;
-				}
-			}
-		}
 	}
 
 	@Override
